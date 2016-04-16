@@ -73,7 +73,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void SetupPaddle() {
-		clonePaddle = Instantiate (Paddle, Paddle.transform.position, Quaternion.identity) as GameObject;
+		clonePaddle = Instantiate (Paddle, Paddle.transform.position, Quaternion.identity) as GameObject;	
 	}
 
+	public void DestroyBrick(){
+		Bricks--;
+		CheckGameOver ();
+	}
 }
