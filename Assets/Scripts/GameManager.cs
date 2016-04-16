@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject YouWon = null;
 	public GameObject BricksPrefab = null;
 	public GameObject Paddle = null;
+	public GameObject PfDeathParticles = null;
 
 	public static GameManager Instance = null;
 
@@ -66,10 +67,16 @@ public class GameManager : MonoBehaviour {
 		Lives--;
 		if (TxtLives != null) {
 			TxtLives.text = "Lives: " + Lives;
-			Destroy (clonePaddle.gameObject);
-			Invoke ("SetupPaddle", ResetDelay);
-			CheckGameOver ();
 		}
+
+		if (PfDeathParticles != null) {
+			Instantiate (PfDeathParticles, clonePaddle.transform.position, Quaternion.identity);
+		}
+
+		Destroy (clonePaddle.gameObject);
+		Invoke ("SetupPaddle", ResetDelay);
+		CheckGameOver ();
+
 	}
 
 	public void SetupPaddle() {
