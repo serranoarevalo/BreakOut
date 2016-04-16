@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void CheckGameOver() {
-		if (Bricks <= 1) {
+		if (Bricks < 1) {
 			if (YouWon != null) {
 				YouWon.SetActive (true);
 				Time.timeScale = 0.25f;
