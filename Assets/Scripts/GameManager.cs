@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -35,6 +36,44 @@ public class GameManager : MonoBehaviour {
 		if (BricksPrefab != null) {
 			Instantiate (BricksPrefab, BricksPrefab.transform.position, Quaternion.identity);
 		}
+	}
+
+	void CheckGameOver() {
+		if (Bricks <= 1) {
+			if (YouWon != null) {
+				YouWon.SetActive (true);
+				Time.timeScale = 0.25f;
+
+				Invoke ("Reset", ResetDelay);
+			}
+		}
+
+		if (Lives < 1) {
+			if (GameOver != null) {
+				GameOver.SetActive (true);
+				Time.timeScale = 0.25f;
+				Invoke ("Reset", ResetDelay);
+			}
+		}
+	}
+
+	void Reset(){
+		Time.timeScale = 1;
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
+	public void LoseLife(){
+		Lives--;
+		if (TxtLives != null) {
+			TxtLives.text = "Lives: " + Lives;
+			Destroy (clonePaddle.gameObject);
+			Invoke ("SetupPaddle", ResetDelay);
+			CheckGameOver ();
+		}
+	}
+
+	public void SetupPaddle() {
+		clonePaddle = Instantiate (Paddle, Paddle.transform.position, Quaternion.identity) as GameObject;
 	}
 
 }
